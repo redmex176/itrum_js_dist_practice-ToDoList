@@ -3,7 +3,9 @@
     padding: 0;
 }
 p {
+    
     font-size: 20px;
+    position: absolute;
 }
 button {
     border: none; 
@@ -103,11 +105,14 @@ input {
 }
 .text  {
     margin-left: 20px;
-    width: 270px;
+    width: 355px;
     padding-right: 15px;
 }
 .data {
     width: 100px;
+}
+.filter {
+    margin-left: 135px;
 }
 .btn__edit {
     height: 25px;
@@ -132,12 +137,61 @@ select {
 }
 .today {
     margin-left: 20px;
+    
+}
+
+.input__bgc:focus {
+    outline: none !important;
 }
 
 .input__bgc {
+  
     background: transparent;
     border: 0px solid #000;
+    
 }
+
+.input__bgc::-webkit-calendar-picker-indicator {
+    opacity: 0;
+} 
+    
 .owerflowWrap {
     overflow-wrap: anywhere;
-}
+} 
+  input[type="date"] {
+    position: relative;
+    
+  }
+  
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    color: transparent;
+    background: transparent;
+  }
+  
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-clear-button {
+    z-index: -10;
+  }
+  
+  input[type="date"]::-webkit-input-placeholder {
+    z-index: 99;
+  }
+  
+  input[type="date"]:placeholder {
+    z-index: 99;
+  }
+  input[type="date"]:not(.has-value):before {
+    content: attr(placeholder);
+    width: 100%;
+  }
+  
+  input[type="date"] {
+    width: 143px;
+  }
