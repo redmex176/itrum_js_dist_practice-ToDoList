@@ -89,10 +89,12 @@ function newRender() {
     const selectedDateTasks = tasks.filter(task => isSameDate(task.date, selectedDate));
 
     renderTasks(selectedDateTasks);
+    console.log('222');
 }
 dateInput.addEventListener("change", () => {
     newRender();
     updateToday();
+    console.log('111');
 });
 
 function isSameDate(taskDate, selectedDate) {
@@ -136,37 +138,20 @@ function checkedTaskById(id) {
 
 function editTaskById(id) {
     const taskIndex = tasks.findIndex(task => task.id === id);
-    const newText = document.querySelectorAll('.text');
     
-    
-
     if (taskIndex !== -1) {
+        const newText = prompt('', tasks[taskIndex].text);
         const newArr = Array.from(newText);
-        
-        newArr[taskIndex].setAttribute('contenteditable', true);
-        
-        newText[taskIndex].focus();
-        
-        newText[taskIndex].addEventListener('keypress', (e) => {
-            if (e.key === "Enter") {
-                tasks[taskIndex].text = newText[taskIndex].textContent;
-                
-                saveTasks();
-                newRender();
-                newText[taskIndex].setAttribute('contenteditable', false);  
-            }
-        });
-        newText[taskIndex].addEventListener('blur', (e) => {
-            tasks[taskIndex].text = newText[taskIndex].textContent;
-            saveTasks();
-            newRender();
-            newText[taskIndex].setAttribute('contenteditable', false);  
-        });
+
+        tasksContainer.addEventListener('click', (e) => {
+            e.target.setAttribute('contenteditable', true);
+            
+        })
+        tasks[taskIndex].text = newText;
     }
 }
 
 function renderTasks(filteredTasks = tasks) {
-
     tasksContainer.innerHTML = "";
 
     filteredTasks.forEach(function (task, i) {
@@ -189,7 +174,8 @@ function renderTasks(filteredTasks = tasks) {
                 <button class="btn__edit" data-index="${i}" class="editBtn"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="m3.99 16.854-1.314 3.504a.75.75 0 0 0 .966.965l3.503-1.314a3 3 0 0 0 1.068-.687L18.36 9.175s-.354-1.061-1.414-2.122c-1.06-1.06-2.122-1.414-2.122-1.414L4.677 15.786a3 3 0 0 0-.687 1.068zm12.249-12.63 1.383-1.383c.248-.248.579-.406.925-.348.487.08 1.232.322 1.934 1.025.703.703.945 1.447 1.025 1.934.058.346-.1.677-.348.925L19.774 7.76s-.353-1.06-1.414-2.12c-1.06-1.062-2.121-1.415-2.121-1.415z" fill="#000000"></path></g></svg>
                 </button>
             `;
-            document.querySelectorAll('.text').forEach(item => {
+            const newItem =  document.querySelectorAll('.text');
+            newItem.forEach(item => {
                 item.classList.add('owerflowWrap');
             });
 
@@ -205,20 +191,22 @@ function renderTasks(filteredTasks = tasks) {
     
             const checkbox = taskElement.querySelectorAll(".checkbox");
             checkbox.forEach(item => {
-                item.addEventListener("change", () => {
+
+                item.addEventListener("change", (e) => {
                     const taskId = task.id;
                     checkedTaskById(taskId);
                     saveTasks();
                     newRender();
                 });
             })
-            const newText = document.querySelector('.text');
+    
             const editBtn = taskElement.querySelector(".btn__edit");
-
             editBtn.addEventListener("click", (e) =>  {
+                console.log(e.target);
                 const taskId = task.id;
                 editTaskById(taskId);
                 saveTasks();
+                newRender();
             });  
         }
     });
